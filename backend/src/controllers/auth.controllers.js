@@ -39,28 +39,33 @@ export const signup = async (request, response) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // After all the checks, get the user ready
     const newUser = new User({
       fullName,
       email,
       password: hashedPassword,
     });
 
+    // If user exists, first save the user then generate the token
     if (newUser) {
-      generateToken(newUser._id, response);
-      await newUser.save();
+      const savedUser = await newUser.save();
+      generateToken(savedUser._id, response);
+
+      // Send response to client;
       response.status(201).json({
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        email: newUser.email,
-        profilePic: newUser.profilePic,
+        _id: savedUser._id,
+        fullName: savedUser.fullName,
+        email: savedUser.email,
+        profilePic: savedUser.profilePic,
       });
     } else {
+      // Show proper error;
       response.status(400).json({
         message: "Invalid user data",
       });
     }
   } catch (error) {
-    console.error("Error in Sign up controller", error);
+    console.error("Error in Sign up Controller", error);
     response.status(500).json({
       message: "Internal server error",
     });
