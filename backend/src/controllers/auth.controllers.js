@@ -1,4 +1,6 @@
 import bcrypt from "bcryptjs";
+import { sendWelcomeEmail } from "../emails/email-handler.js";
+import { ENV } from "../lib/env.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 
@@ -58,6 +60,19 @@ export const signup = async (request, response) => {
         email: savedUser.email,
         profilePic: savedUser.profilePic,
       });
+      // Send welcome email
+      try {
+        await sendWelcomeEmail({
+          email: savedUser.email,
+          name: savedUser.fullName,
+          clientUrl: ENV.CLIENT_URL,
+        });
+      } catch (error) {
+        console.error("Error sending email", error);
+        response.status(500).json({
+          message: "Failed to send email",
+        });
+      }
     } else {
       // Show proper error;
       response.status(400).json({

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
+import { ENV } from "./env.js";
 
 export const connectDb = async () => {
   try {
-    const { MONGO_URI } = process.env;
-    if (!MONGO_URI) throw new Error("Mongo URI is not set");
-    const connect = await mongoose.connect(MONGO_URI, {
+    if (!ENV.MONGO_URI) throw new Error("Mongo URI is not set");
+    const connect = await mongoose.connect(ENV.MONGO_URI, {
       serverSelectionTimeoutMS: 10000,
     });
     console.log("MongoDB connected successfully", connect.connection.host);
