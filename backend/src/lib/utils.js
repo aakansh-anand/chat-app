@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
+import { ENV } from "./env.js";
 
 export const generateToken = async (userId, response) => {
   // sign takes three things
   /* 1. payload
      2. secret key
      3. options    */
-  const { JWT_SECRET, NODE_ENV, JWT_EXPIRES_IN } = process.env;
+  const { JWT_SECRET, NODE_ENV, JWT_EXPIRES_IN } = ENV;
   if (!JWT_SECRET) throw new Error("JWT Secret is not configured.");
   const token = jwt.sign({ userId: userId }, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN || "15d",

@@ -51,6 +51,7 @@ Update the .gitignore in for node.js projects
 - Add the environment variables to the express app.
 - Add the database connection to the express app.
 - Add the cookie parser and json middleware at the start of app.
+- Inside src/lib, make a new file, env.js and utilize the concept used in the file we have.
 
 # Add auth setup
 
@@ -63,3 +64,10 @@ Update the .gitignore in for node.js projects
 - Configure jwt token setup. Inside `src/utils` create a new file called jwt.utils.js and setup the jwt token setup there.
 
 The sequence of doing this is very simple, create route -> make controller -> setup model for the entity used -> Generate utility functions for the controllers.
+
+# Add email setup
+
+- First I've installed npm package `npm install resend@6.0.2`
+- Next, we grab the API_KEY from the resend website and set the environment variable in the .env file for "EMAIL_FROM", "EMAIL_FROM_NAME", "RESEND_API_KEY" and "CLIENT_URL".
+- In side `src/lib` create a new file called resend.js and setup the resend client there. Check the file for the code and understanding
+- We also did the setup for email template and email handler. Check the files for the code and understanding.
