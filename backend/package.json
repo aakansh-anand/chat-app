@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "This is a chat app backend written in nodejs",
   "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "nodemon ./src/server.js",
     "start": "node ./src/server.js"

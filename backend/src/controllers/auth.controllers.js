@@ -61,6 +61,7 @@ export const signup = async (request, response) => {
         profilePic: savedUser.profilePic,
       });
       // Send welcome email
+      /*
       try {
         await sendWelcomeEmail({
           email: savedUser.email,
@@ -73,6 +74,14 @@ export const signup = async (request, response) => {
           message: "Failed to send email",
         });
       }
+      */
+      sendWelcomeEmail(
+        savedUser.email,
+        savedUser.fullName,
+        ENV.CLIENT_URL,
+      ).catch((error) => {
+        console.error("Failed to send welcome email", error);
+      });
     } else {
       // Show proper error;
       response.status(400).json({
